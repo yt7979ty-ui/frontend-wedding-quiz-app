@@ -1,33 +1,29 @@
 import React from 'react';
 import {
-  SparklesIcon, // Aliased to ChampagneIcon
-  PlayIcon as HeroPlayIcon, // Aliased to PlayIcon
-  ArrowPathIcon, // Aliased to RefreshIcon
-  CheckCircleIcon as HeroCheckCircleIcon, // Aliased to CheckCircleIcon
-  XCircleIcon as HeroXCircleIcon, // ...
+  SparklesIcon, 
+  PlayIcon as HeroPlayIcon, 
+  ArrowPathIcon, 
+  CheckCircleIcon as HeroCheckCircleIcon, 
+  XCircleIcon as HeroXCircleIcon, 
   TrophyIcon as HeroTrophyIcon,
   ClockIcon as HeroClockIcon,
   UserGroupIcon as HeroUserGroupIcon,
   ArrowUturnLeftIcon as HeroArrowUturnLeftIcon,
   EyeIcon as HeroEyeIcon,
-  ArchiveBoxIcon, // Aliased to HistoryIcon
+  ArchiveBoxIcon, 
   ArrowLeftOnRectangleIcon as HeroArrowLeftOnRectangleIcon,
-  ClipboardDocumentListIcon as HeroClipboardDocumentListIcon
+  ClipboardDocumentListIcon as HeroClipboardDocumentListIcon,
+  TrashIcon as HeroTrashIcon // ★ 1. TrashIcon をインポート
 } from '@heroicons/react/24/solid';
 
-// ★ 1. props の型定義を（もしなければ）追加
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-// ★ 2. エイリアス（別名）を使ってエクスポート
-// (名前が違うもの)
+// ( ... 他のアイコンは変更なし ... )
 export const ChampagneIcon = (props: IconProps) => <SparklesIcon {...props} />;
-export const RefreshIcon = (props: IconProps) => <ArrowPathIcon {...props} />;
-export const HistoryIcon = (props: IconProps) => <ArchiveBoxIcon {...props} />;
-
-// (名前が同じもの - "Hero..." という別名でインポートして使用)
 export const PlayIcon = (props: IconProps) => <HeroPlayIcon {...props} />;
+export const RefreshIcon = (props: IconProps) => <ArrowPathIcon {...props} />;
 export const CheckCircleIcon = (props: IconProps) => <HeroCheckCircleIcon {...props} />;
 export const XCircleIcon = (props: IconProps) => <HeroXCircleIcon {...props} />;
 export const TrophyIcon = (props: IconProps) => <HeroTrophyIcon {...props} />;
@@ -35,5 +31,9 @@ export const ClockIcon = (props: IconProps) => <HeroClockIcon {...props} />;
 export const UserGroupIcon = (props: IconProps) => <HeroUserGroupIcon {...props} />;
 export const ArrowUturnLeftIcon = (props: IconProps) => <HeroArrowUturnLeftIcon {...props} />;
 export const EyeIcon = (props: IconProps) => <HeroEyeIcon {...props} />;
+export const HistoryIcon = (props: IconProps) => <ArchiveBoxIcon {...props} />;
 export const ArrowLeftOnRectangleIcon = (props: IconProps) => <HeroArrowLeftOnRectangleIcon {...props} />;
 export const ClipboardDocumentListIcon = (props: IconProps) => <HeroClipboardDocumentListIcon {...props} />;
+
+// ★ 2. TrashIcon をエクスポート
+export const TrashIcon = (props: IconProps) => <HeroTrashIcon {...props} />;
