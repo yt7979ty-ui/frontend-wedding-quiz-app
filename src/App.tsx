@@ -7,6 +7,7 @@ import { QuizMode, Quiz, AppState, Player, QuizHistoryItem } from './types';
 import { ChampagneIcon } from './components/icons';
 import { socket } from './socket';
 
+// ... (initialAppState, Appコンポーネント定義 は変更なし) ...
 const initialAppState: AppState = {
   quizMode: 'idle',
   currentQuiz: {
@@ -23,6 +24,7 @@ const initialAppState: AppState = {
 };
 
 const App: React.FC = () => {
+  // ... (checkIsAdmin, useStateフック は変更なし) ...
   const checkIsAdmin = () => {
     const params = new URLSearchParams(window.location.search);
     return params.get('mode') === 'admin';
@@ -36,7 +38,7 @@ const App: React.FC = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showParticipantList, setShowParticipantList] = useState(false);
 
-  // --- サーバーとの通信ロジック ---
+  // ... (useEffectフック は変更なし) ...
   useEffect(() => {
     socket.on('connect', () => {
       console.log('サーバーに接続しました！ ID:', socket.id);
@@ -63,8 +65,8 @@ const App: React.FC = () => {
     };
   }, []);
 
-
   // --- サーバーへイベントを送信する関数 ---
+  // ... (startQuiz, resetQuiz, forceEndQuiz, showResults, resetWinner, resetAllWinners は変更なし) ...
   const startQuiz = useCallback((quiz: Quiz) => {
     socket.emit('admin:startQuiz', quiz);
   }, []);
@@ -89,43 +91,29 @@ const App: React.FC = () => {
     socket.emit('admin:resetAllWinners');
   }, []);
 
+  // ★★★ (機能追加) 履歴を削除する関数 ★★★
+  const clearHistory = useCallback(() => {
+    if (window.confirm('本当にすべてのクイズ履歴を削除しますか？\n（この操作は元に戻せません）')) {
+      socket.emit('admin:clearHistory');
+    }
+  }, []);
+
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-rose-100 text-gray-800 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         
         {/* ... (header は変更なし) ... */}
-        <header className="mb-8 pb-6 text-center border-b-2 border-amber-200">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <ChampagneIcon className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" />
-            <h1 className="text-3xl sm:text-4xl font-bold text-amber-800 tracking-wider">
-              村木夫妻 Wedding Party Event
-            </h1>
-            <ChampagneIcon className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" />
-          </div>
-          
-          {isAdmin && (
-            <div className="flex justify-center items-center space-x-2 bg-white rounded-full p-1 shadow-md max-w-xs mx-auto">
-              <button
-                onClick={() => {
-                  setShowHistory(false);
-                  setShowParticipantList(false);
-                }}
-                className={`w-full px-4 py-2 text-sm font-bold rounded-full transition-colors duration-300 bg-amber-500 text-white shadow-inner`}
-              >
-                管理者パネル
-              </button>
-            </div>
-          )}
-        </header>
 
         <main>
           {isAdmin ? (
             <>
               {showHistory ? (
+                // ★★★ (修正) HistoryView に onClearHistory を渡す ★★★
                 <HistoryView 
                   history={appState.history}
                   onBack={() => setShowHistory(false)}
+                  onClearHistory={clearHistory}
                 />
               ) : showParticipantList ? (
                 <ParticipantListView
@@ -164,7 +152,6 @@ const App: React.FC = () => {
               winners={appState.winners}
               currentQuiz={appState.currentQuiz}
               timer={appState.timer}
-              // ★★★ ここを修正しました ★★★
               participants={appState.participants}
               history={appState.history}
             />
