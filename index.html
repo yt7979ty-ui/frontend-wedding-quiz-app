@@ -6,7 +6,7 @@
     <title>村木夫妻 Wedding Party Event</title>
 
     <meta name="theme-color" content="#fffbeb" id="theme-color-meta">
-    <link rel="manifest" href="/frontend-wedding-quiz-app/manifest.json" id="manifest-link" />
+    
     <link rel="apple-touch-icon" href="/frontend-wedding-quiz-app/apple-touch-icon.png" id="apple-touch-icon-link">
     <link rel="icon" href="/frontend-wedding-quiz-app/favicon.ico" sizes="any" id="favicon-link">
     
@@ -21,25 +21,35 @@
   
     <script>
       (function() {
-        // 1. リポジトリのベースパス（vite.config.ts の 'base' と同じ値）を定義
         const basePath = '/frontend-wedding-quiz-app'; 
-        
-        // 2. URLに ?mode=admin が含まれているかチェック
         const isAdmin = new URLSearchParams(window.location.search).get('mode') === 'admin';
         
+        // manifest.json を動的に追加する
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.id = 'manifest-link'; // id を付与
+        
         if (isAdmin) {
-          // 3. すべてのパスに basePath を手動で追加
-          document.getElementById('manifest-link')?.setAttribute('href', basePath + '/manifest-admin.json');
+          // 管理者用 manifest とアイコンを設定
+          manifestLink.href = basePath + '/manifest-admin.json';
           document.getElementById('apple-touch-icon-link')?.setAttribute('href', basePath + '/admin-apple-touch-icon.png');
           document.getElementById('favicon-link')?.setAttribute('href', basePath + '/admin-favicon.ico');
           document.getElementById('theme-color-meta')?.setAttribute('content', '#e2e8f0');
-          document.title = "管理者パネル - Wedding Quiz"; // タイトルも変更
+          document.title = "管理者パネル - Wedding Quiz"; 
+        } else {
+          // 参加者用 manifest とアイコンを設定
+          manifestLink.href = basePath + '/manifest.json';
+          document.getElementById('apple-touch-icon-link')?.setAttribute('href', basePath + '/apple-touch-icon.png');
+          document.getElementById('favicon-link')?.setAttribute('href', basePath + '/favicon.ico');
+          document.getElementById('theme-color-meta')?.setAttribute('content', '#fffbeb'); // 参加者用のテーマカラー
+          document.title = "村木夫妻 Wedding Party Event"; // 参加者用のタイトル
         }
+        document.head.appendChild(manifestLink);
       })();
     </script>
-      <script type="module" crossorigin src="/frontend-wedding-quiz-app/assets/index-B6JfxxJK.js"></script>
-      <link rel="stylesheet" crossorigin href="/frontend-wedding-quiz-app/assets/index-XLvnDUWY.css">
-    </head>
+    <script type="module" crossorigin src="/frontend-wedding-quiz-app/assets/index-B6JfxxJK.js"></script>
+    <link rel="stylesheet" crossorigin href="/frontend-wedding-quiz-app/assets/index-XLvnDUWY.css">
+  </head>
   <body class="bg-amber-50">
     <div id="root"></div>
   </body>
