@@ -22,7 +22,22 @@
       }
     </style>
   
-      <script type="module" crossorigin src="/frontend-wedding-quiz-app/assets/index-B6JfxxJK.js"></script>
+    <script>
+      (function() {
+        // URLに ?mode=admin が含まれているかチェック
+        const isAdmin = new URLSearchParams(window.location.search).get('mode') === 'admin';
+        
+        if (isAdmin) {
+          // 管理者の場合は、アイコンのパスを admin 用に書き換える
+          document.getElementById('manifest-link')?.setAttribute('href', '/manifest-admin.json');
+          document.getElementById('apple-touch-icon-link')?.setAttribute('href', '/admin-apple-touch-icon.png');
+          document.getElementById('favicon-link')?.setAttribute('href', '/admin-favicon.ico');
+          document.getElementById('theme-color-meta')?.setAttribute('content', '#e2e8f0');
+          document.title = "管理者パネル - Wedding Quiz"; // タイトルも変更
+        }
+      })();
+    </script>
+      <script type="module" crossorigin src="/frontend-wedding-quiz-app/assets/index-CRn8XH1p.js"></script>
       <link rel="stylesheet" crossorigin href="/frontend-wedding-quiz-app/assets/index-XLvnDUWY.css">
     </head>
   <body class="bg-amber-50">
