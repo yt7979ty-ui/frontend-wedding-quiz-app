@@ -6,11 +6,8 @@
     <title>村木夫妻 Wedding Party Event</title>
 
     <meta name="theme-color" content="#fffbeb" id="theme-color-meta">
-    
     <link rel="manifest" href="/frontend-wedding-quiz-app/manifest.json" id="manifest-link" />
-    
     <link rel="apple-touch-icon" href="/frontend-wedding-quiz-app/apple-touch-icon.png" id="apple-touch-icon-link">
-    
     <link rel="icon" href="/frontend-wedding-quiz-app/favicon.ico" sizes="any" id="favicon-link">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +21,17 @@
   
     <script>
       (function() {
-        // URLに ?mode=admin が含まれているかチェック
+        // 1. リポジトリのベースパス（vite.config.ts の 'base' と同じ値）を定義
+        const basePath = '/frontend-wedding-quiz-app'; 
+        
+        // 2. URLに ?mode=admin が含まれているかチェック
         const isAdmin = new URLSearchParams(window.location.search).get('mode') === 'admin';
         
         if (isAdmin) {
-          // 管理者の場合は、アイコンのパスを admin 用に書き換える
-          document.getElementById('manifest-link')?.setAttribute('href', '/manifest-admin.json');
-          document.getElementById('apple-touch-icon-link')?.setAttribute('href', '/admin-apple-touch-icon.png');
-          document.getElementById('favicon-link')?.setAttribute('href', '/admin-favicon.ico');
+          // 3. すべてのパスに basePath を手動で追加
+          document.getElementById('manifest-link')?.setAttribute('href', basePath + '/manifest-admin.json');
+          document.getElementById('apple-touch-icon-link')?.setAttribute('href', basePath + '/admin-apple-touch-icon.png');
+          document.getElementById('favicon-link')?.setAttribute('href', basePath + '/admin-favicon.ico');
           document.getElementById('theme-color-meta')?.setAttribute('content', '#e2e8f0');
           document.title = "管理者パネル - Wedding Quiz"; // タイトルも変更
         }
