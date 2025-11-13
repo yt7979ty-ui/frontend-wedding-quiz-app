@@ -1,0 +1,20 @@
+{
+  "short_name": "Admin Quiz",
+  "name": "管理者用 - Wedding Quiz",
+  "icons": [
+    {
+      "src": "admin-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "admin-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#e2e8f0",
+  "background_color": "#f1f5f9"
+}
